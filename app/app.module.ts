@@ -1,38 +1,39 @@
-import { NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
-import { HttpModule } from '@angular/http'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import './rxjs-extensions';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
+import { CollapsibleWellComponent,
+        JQ_TOKEN,
+        ModalTriggerDirective,
+        SimpleModalComponent,
+        Toastr,
+        TOASTR_TOKEN } from './common/index';
+import { Error404Component } from './errors/404.component';
+import { EventsAppComponent } from './events-app.component';
 import {
+    CreateEventComponent,
+    CreateSessionComponent,
+    DurationPipe,
+    EventDetailsComponent,
+    EventListResolver,
+    EventResolver,
+    EventService,
     EventsListComponent,
     EventThumbnailComponent,
-    EventService,
-    EventDetailsComponent,
-    CreateEventComponent,
-    EventResolver,
-    EventListResolver,
-    CreateSessionComponent,
+    LocationValidator,
     SessionListComponent,
-    DurationPipe,
     UpvoteComponent,
     VoterService,
-    LocationValidator
-} from './events/index'
-import { EventsAppComponent } from './events-app.component'
-import { NavBarComponent } from './nav/navbar.component'
-import { JQ_TOKEN,
-        TOASTR_TOKEN,
-        Toastr,
-        CollapsibleWellComponent,
-        SimpleModalComponent,
-        ModalTriggerDirective } from './common/index'
-import { appRoutes } from './routes'
-import { Error404Component } from './errors/404.component'
-import { AuthService } from './user/auth.service'
+} from './events/index';
+import { NavBarComponent } from './nav/navbar.component';
+import { appRoutes } from './routes';
+import { AuthService } from './user/auth.service';
 
-declare let toastr : Toastr
-declare let jQuery : Object;
+declare let toastr: Toastr;
+declare let jQuery: Object;
 
 @NgModule({
     imports: [BrowserModule,
@@ -55,7 +56,7 @@ declare let jQuery : Object;
         SimpleModalComponent,
         ModalTriggerDirective,
         UpvoteComponent,
-        LocationValidator
+        LocationValidator,
         ],
     providers: [EventService,
                 { provide: TOASTR_TOKEN, useValue: toastr },
@@ -64,14 +65,15 @@ declare let jQuery : Object;
                 EventListResolver,
                 VoterService,
                 AuthService,
-                { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState }
+                { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
                 ],
-    bootstrap: [EventsAppComponent]
+    bootstrap: [EventsAppComponent],
 })
 export class AppModule {}
 
-function checkDirtyState(component:CreateEventComponent) {
-    if (component.isDirty)
-        return window.confirm('You have not saved this event, do you really want to continue?')
-    return true
+function checkDirtyState(component: CreateEventComponent) {
+    if (component.isDirty) {
+        return window.confirm('You have not saved this event, do you really want to continue?');
+    }
+    return true;
 }

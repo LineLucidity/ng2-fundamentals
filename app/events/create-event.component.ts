@@ -1,6 +1,6 @@
-import { Component } from '@angular/core'
-import {Router} from '@angular/router'
-import { EventService } from './shared/index'
+import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+import { EventService } from './shared/index';
 
 @Component({
     templateUrl: 'app/events/create-event.component.html',
@@ -11,10 +11,10 @@ import { EventService } from './shared/index'
         .error ::-moz-placeholder { color: #999; }
         .error :-moz-placeholder { color: #999; }
         .error :ms-input-placeholder { color: #999; }
-        `]
+        `],
 })
 export class CreateEventComponent {
-    isDirty:boolean = true
+    isDirty:boolean = true;
     
     constructor(private router: Router, private eventService: EventService){
 
@@ -25,9 +25,9 @@ export class CreateEventComponent {
     }
 
     saveEvent(formValues) {
-        this.eventService.saveEvent(formValues).subscribe(event => {
-            this.isDirty = false
+        this.eventService.saveEvent(formValues).subscribe((event) => {
+            this.isDirty = false;
             this.router.navigate(['/events']);
-        })
+        });
     }
 }
